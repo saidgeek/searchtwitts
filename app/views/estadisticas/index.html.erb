@@ -1,0 +1,44 @@
+
+<div id="contentPage" class="row">
+	<div class="span4 offset8">
+		<form accept-charset="UTF-8" action="/estadisticas" method="post" class="form-inline">
+			<input type="text" name="tag" class="span3" placeholder="nuevo tag" />
+			<input type="submit" value="Agregar" class="btn" />
+		</form>
+	</div>
+	<div id="btnTags" class="span12">
+		<%= link_to "TODOS", {:controller => "estadisticas", :action => "index"}, :class => "btn btn-large", :id => "todos" %>
+		<% @results.each do |data| %>
+			<%= link_to data["value"], {:controller => "estadisticas", :action => "index", :value => data["value"]}, :class => "btn btn-large", 
+			:id =>  data["value"] %>
+		<% end %>
+	</div>
+</div>
+<p></p>
+<div class="row">
+	<% if @twitts.length <= 0 %>
+		<div class="alert">
+		  No hay twitts asociados a este tag.
+		</div>
+	<% end %>
+	<% @twitts.each do |t| %>
+		<div class="span12 well">
+			<div class="span1 thumbnail">
+				<img src="<%= t['profile_image_url'] %>" />
+			</div>
+			<div class="span10">
+				<blockquote class="pull-right">
+					<p>
+						<%= t["text"]%>
+					</p>
+					<small>
+						<%= t["from_user_name"] %>
+						<cite><b>@<%= t["from_user"] %></b></cite>
+					</small>
+				</blockquote>
+				
+			</div>	
+		</div>
+	<% end %>
+</div>
+
